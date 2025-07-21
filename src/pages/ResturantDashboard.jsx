@@ -87,7 +87,7 @@ const RestaurantDashboard = () => {
       setEditItem(null);
       setShowFoodModal(false);
     } catch (error) {
-      toast.error('Failed to save food item. Please try again.');
+      toast.error('Failed to save food item. ' + (error?.message || JSON.stringify(error) || 'Please try again.'));
     } finally {
       setIsSubmitting(false);
     }
