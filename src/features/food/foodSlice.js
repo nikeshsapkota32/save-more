@@ -6,7 +6,7 @@ import {
   getAvailableListings,
   saveFoodListing,
   updateListingStatus,
-  deleteFoodListing,
+  deleteFoodListing as firebaseDeleteFoodListing,
   uploadImage
 } from '../../firebase/food';
 
@@ -78,7 +78,7 @@ export const deleteFoodListing = createAsyncThunk(
   'food/deleteFoodListing',
   async (id, { rejectWithValue }) => {
     try {
-      await deleteFoodListing(id);
+      await firebaseDeleteFoodListing(id);
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
