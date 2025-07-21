@@ -4,9 +4,9 @@ import {
   getFoodListings,
   getRestaurantListings,
   getAvailableListings,
-  addFoodListing as firebaseAddFoodListing,
+  saveFoodListing,
   updateListingStatus,
-  deleteFoodListing as firebaseDeleteFoodListing,
+  deleteFoodListing,
   uploadImage
 } from '../../firebase/food';
 
@@ -54,8 +54,8 @@ export const addFoodListing = createAsyncThunk(
       };
       delete listingData.imageFile;
       
-      const id = await firebaseAddFoodListing(listingData, userId);
-      return { id, ...listingData };
+      const result = await saveFoodListing({ ...listingData }, foodData.imageFile);
+      return { id: result.id, ...listingData };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -78,7 +78,7 @@ export const deleteFoodListing = createAsyncThunk(
   'food/deleteFoodListing',
   async (id, { rejectWithValue }) => {
     try {
-      await firebaseDeleteFoodListing(id);
+      await deleteFoodListing(id);
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
