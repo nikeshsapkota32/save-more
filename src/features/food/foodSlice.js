@@ -54,7 +54,7 @@ export const addFoodListing = createAsyncThunk(
       };
       delete listingData.imageFile;
       
-      const result = await saveFoodListing({ ...listingData }, foodData.imageFile);
+      const result = await saveFoodListing({ ...listingData }, foodData.imageFile, userId);
       return { id: result.id, ...listingData };
     } catch (error) {
       return rejectWithValue(error.message);

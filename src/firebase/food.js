@@ -15,7 +15,7 @@ export const uploadImage = async (imageFile) => {
 };
 
 // 1. Add/Edit Food Listing (handles image upload)
-export const saveFoodListing = async ({ id, ...data }, imageFile) => {
+export const saveFoodListing = async ({ id, ...data }, imageFile, userId) => {
   let imageUrl = data.image || null;
   
   // Upload new image if exists
@@ -28,7 +28,8 @@ export const saveFoodListing = async ({ id, ...data }, imageFile) => {
   const foodData = { 
     ...data, 
     image: imageUrl,
-    userId: auth.currentUser?.uid,
+    userId: userId || auth.currentUser?.uid,
+    restaurantId: userId || auth.currentUser?.uid,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
     status: 'available'

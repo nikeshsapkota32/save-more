@@ -4,16 +4,21 @@ import { toast } from 'react-hot-toast';
 // Mock login function
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock user data
+      // If userData is already provided (from login page), use it
+      if (userData && userData.id) {
+        return userData;
+      }
+      
+      // Otherwise, create mock user data (fallback)
       const mockUser = {
         uid: `user-${Date.now()}`,
-        email: credentials.email,
-        displayName: credentials.email.split('@')[0],
+        email: userData.email,
+        displayName: userData.email.split('@')[0],
         photoURL: null,
         emailVerified: true
       };
